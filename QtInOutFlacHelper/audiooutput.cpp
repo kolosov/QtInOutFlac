@@ -50,6 +50,9 @@ AudioOutput::AudioOutput(QObject *parent, int Index, bool UseCopy, bool UseFlacF
     qDebug() << "Output device is: " << infoOut.deviceName();
     m_AudioOutput = new QAudioOutput(infoOut, m_Format, this);
 
+    //set bigger buffer
+    m_AudioOutput->setBufferSize(65536);
+
 }
 
 int AudioOutput::getByteBufferSize()
@@ -71,9 +74,11 @@ void AudioOutput::writeMoreRaw(char *buf, int len)
 
     int rest = m_Output->bytesAvailable();
     int buf_size = m_AudioOutput->bufferSize();
+    int bytes_free = m_AudioOutput->bytesFree();
     qint64 l = m_Output->write((char*)out, len);
     qDebug() << "AudioOutput::writeMoreRaw, " << l << " bytes were written, rest="
-             << rest << ", buf_size=" << buf_size;
+             << rest << ", buf_size=" << buf_size
+             << " bytes_free=" << bytes_free;
 }
 
 int AudioOutput::readMoreFlacData(char *buf, int len)

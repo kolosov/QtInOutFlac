@@ -48,14 +48,6 @@ FLAC__StreamDecoderWriteStatus FlacDecoder::write_callback(const FLAC__Frame *fr
     for(unsigned int i = 0; i < block_len; i++) {
         tmp_buf[i] = (FLAC__int16)buffer[0][i];
 
-        /*
-            if(
-                    !write_little_endian_int16(f, (FLAC__int16)buffer[0][i]) ||
-                    !write_little_endian_int16(f, (FLAC__int16)buffer[1][i])
-            ) {
-                    QDebug << "ERROR: write_callback error";
-                    return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
-            }*/
     }
     m_AudioOutput->writeMoreRaw((char *)tmp_buf, block_len * 2);
 
