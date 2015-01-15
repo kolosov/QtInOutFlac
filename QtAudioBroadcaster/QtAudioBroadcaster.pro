@@ -24,9 +24,9 @@ SOURCES += main.cpp \
 HEADERS += \
     audiobroadcaster.h
 
-unix:!macx: LIBS += -L$$PWD/../build-QtInOutFlacHelper-Desktop-Debug/ -lQtInOutFlacHelper
+unix:!macx: LIBS += -L$$PWD/../QtInOutFlacHelper/ -lQtInOutFlacHelper
 
 INCLUDEPATH += $$PWD/../QtInOutFlacHelper
 DEPENDPATH += $$PWD/../QtInOutFlacHelper
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/../build-QtInOutFlacHelper-Desktop-Debug/libQtInOutFlacHelper.a
+unix:!macx: PRE_TARGETDEPS += $$PWD/../QtInOutFlacHelper/libQtInOutFlacHelper.a
