@@ -5,7 +5,7 @@ AudioListener::AudioListener(QObject *parent) :
 {
     m_Socket = new QUdpSocket(this);
     m_Socket->bind(QHostAddress::Any, BROADCAST_PORT);
-    m_UseFile=true;
+    m_UseFile=false;
     //m_flac_should_start = false;
     m_flac_is_playing = false;
 
