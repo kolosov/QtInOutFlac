@@ -29,7 +29,7 @@ void AudioListener::start()
 
 void AudioListener::readDataFromSocket()
 {
-    qDebug() << "AudioListener::readDataFromSocket";
+    //qDebug() << "AudioListener::readDataFromSocket";
     QByteArray datagram;
     datagram.resize(m_Socket->pendingDatagramSize());
 
@@ -38,7 +38,7 @@ void AudioListener::readDataFromSocket()
 
     m_Socket->readDatagram(datagram.data(), datagram.size(), &SenderHost, &SenderPort);
 
-    qDebug() << "AudioListener::readDataFromSocket, recieved " << datagram.size() << " bytes";
+    //qDebug() << "AudioListener::readDataFromSocket, recieved " << datagram.size() << " bytes";
     if(m_UseFile) m_OutFile->write(datagram);
 
     m_AudioOutput->writeMoreFlacData(datagram);

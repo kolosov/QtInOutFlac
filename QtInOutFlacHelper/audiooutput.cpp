@@ -72,21 +72,21 @@ void AudioOutput::writeMoreRaw(char *buf, int len)
         m_tmpOutFile->write(buf, len);
     }
 
-    int rest = m_Output->bytesAvailable();
+    /*int rest = m_Output->bytesAvailable();
     int buf_size = m_AudioOutput->bufferSize();
-    int bytes_free = m_AudioOutput->bytesFree();
+    int bytes_free = m_AudioOutput->bytesFree();*/
     qint64 l = m_Output->write((char*)out, len);
-    qDebug() << "AudioOutput::writeMoreRaw, " << l << " bytes were written, rest="
+    /*qDebug() << "AudioOutput::writeMoreRaw, " << l << " bytes were written, rest="
              << rest << ", buf_size=" << buf_size
-             << " bytes_free=" << bytes_free;
+             << " bytes_free=" << bytes_free;*/
 }
 
 int AudioOutput::readMoreFlacData(char *buf, int len)
 {
     int readBytes = len;
-    qDebug() << "AudioOutput::readMoreFlacData, needs "
+    /*qDebug() << "AudioOutput::readMoreFlacData, needs "
              << len << "bytes, audio buf size = "
-             << m_ByteBuffer->size();
+             << m_ByteBuffer->size();*/
     if(m_ByteBuffer->size() < len) readBytes = m_ByteBuffer->size();
     memcpy(buf, m_ByteBuffer->data(), readBytes);
     m_ByteBuffer->remove(0,readBytes);
@@ -96,8 +96,8 @@ int AudioOutput::readMoreFlacData(char *buf, int len)
 
 void AudioOutput::writeMoreFlacData(QByteArray flacData)
 {
-    qDebug() << "AudioOutput::writeMoreFlacData, added "
-             << flacData.size() << " bytes";
+    /*qDebug() << "AudioOutput::writeMoreFlacData, added "
+             << flacData.size() << " bytes";*/
     m_ByteBuffer->append(flacData);
 
     emit newFlacDataReady();
@@ -106,7 +106,7 @@ void AudioOutput::writeMoreFlacData(QByteArray flacData)
 void AudioOutput::processMore()
 {
     while(m_ByteBuffer->size() > m_MinBufSize) {
-        qDebug() << "Start flac process";
+        //qDebug() << "Start flac process";
         m_FlacDecoder->process_single();
     }
 }

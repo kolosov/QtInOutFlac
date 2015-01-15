@@ -14,7 +14,7 @@ FlacEncoder::FlacEncoder(AudioInput *anAudioInput, bool UseFile)
 {
     (void)samples, (void)current_frame;
 
-    qDebug() << "Encoder: Write callback: bytes:" << bytes;
+    //qDebug() << "Encoder: Write callback: bytes:" << bytes;
     if(m_UseFile) {
         if(fwrite(buffer, 1, bytes, m_FlacOutFile) != bytes)
             return ::FLAC__STREAM_ENCODER_WRITE_STATUS_FATAL_ERROR;
@@ -26,7 +26,7 @@ FlacEncoder::FlacEncoder(AudioInput *anAudioInput, bool UseFile)
         ByteBuffer.resize((int)bytes);
         memcpy((void*)ByteBuffer.data(), (const char*)buffer, bytes);
         //= QByteArray((const char*)buffer, (int)bytes);
-        qDebug() << "Encoder: sending buffer " << bytes << " bytes";
+        //qDebug() << "Encoder: sending buffer " << bytes << " bytes";
 
         m_AudioInput->putNewFlacData(ByteBuffer);
 

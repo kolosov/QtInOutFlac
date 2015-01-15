@@ -31,8 +31,8 @@ void AudioBroadcaster::readyReadNewFlacData(QByteArray buffer)
     qint64 l = m_Socket->writeDatagram(buffer.data(), buffer.size(),
                             QHostAddress::Broadcast, BROADCAST_PORT);
 
-    qDebug() << "AudioBroadcaster::readyReadNewFlacData, "
-             << l << " bytes were sent";
+    /*qDebug() << "AudioBroadcaster::readyReadNewFlacData, "
+             << l << " bytes were sent";*/
     if(l<0)
         qDebug() << "Socket error: " <<  m_Socket->error() << " " << m_Socket->errorString();
 

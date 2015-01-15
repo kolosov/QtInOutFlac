@@ -87,7 +87,7 @@ void AudioInput::readMore()
 {
 
     qint64 len = m_AudioInput->bytesReady();
-    qDebug() << "AudioInput: bytesReady: " << len;
+    //qDebug() << "AudioInput: bytesReady: " << len;
 
     if(len > BUF_SIZE)
         len = BUF_SIZE;
@@ -95,7 +95,7 @@ void AudioInput::readMore()
     char *data_ptr = m_CharBuf;
 
     qint64 l = m_Input->read(data_ptr, len);
-    qDebug() << "read " << l << " bytes" << len;
+    //qDebug() << "read " << l << " bytes" << len;
 
     //flac start
     FLAC__int32 samples_array[BUF_SIZE/2];
@@ -103,7 +103,7 @@ void AudioInput::readMore()
     unsigned samples = l/2 ; // sample size is 2 bytes
 
     if(m_UseFlacBuf || m_UseFlacFile) {
-        for(int i=0;i<samples;i++)
+        for(unsigned int i=0;i<samples;i++)
         {
             samples_array[i]= *short_buf++;
         }
