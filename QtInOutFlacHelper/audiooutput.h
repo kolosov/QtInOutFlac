@@ -43,6 +43,8 @@ private:
     bool m_UseFlacFile;
     bool m_UseFlacBuf;
 
+    QFile *m_tmpOutFile;
+
     int m_MinBufSize;
 
     QByteArray *m_ByteBuffer;

@@ -4,8 +4,8 @@ AudioListener::AudioListener(QObject *parent) :
     QObject(parent)
 {
     m_Socket = new QUdpSocket(this);
-    m_Socket->bind(QHostAddress::LocalHost, BROADCAST_PORT);
-    m_UseFile=false;
+    m_Socket->bind(QHostAddress::Any, BROADCAST_PORT);
+    m_UseFile=true;
     //m_flac_should_start = false;
     m_flac_is_playing = false;
 
@@ -19,7 +19,7 @@ void AudioListener::start()
         if(!res) qDebug() << "Cannot open file" << QString(OUT_FLAC_FILE);
     }
 
-    m_AudioOutput = new AudioOutput(this, -1, false, false, true);
+    m_AudioOutput = new AudioOutput(this, -1, false, m_UseFile, true);
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(readDataFromSocket()));
 

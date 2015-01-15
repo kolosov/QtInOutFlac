@@ -42,6 +42,11 @@ AudioOutput::AudioOutput(QObject *parent, int Index, bool UseCopy, bool UseFlacF
     }
     //flac end
 
+    if(m_UseFlacFile){
+        m_tmpOutFile = new QFile(QString("/tmp/tmpOutFile.wav"));
+        bool res = m_tmpOutFile->open(QIODevice::WriteOnly);
+    }
+
     qDebug() << "Output device is: " << infoOut.deviceName();
     m_AudioOutput = new QAudioOutput(infoOut, m_Format, this);
 
@@ -60,8 +65,15 @@ void AudioOutput::writeMoreRaw(char *buf, int len)
     short *out=resData;
     out[0] = resData[0];
 
+    if(m_UseFlacFile) {
+        m_tmpOutFile->write(buf, len);
+    }
+
+    int rest = m_Output->bytesAvailable();
+    int buf_size = m_AudioOutput->bufferSize();
     qint64 l = m_Output->write((char*)out, len);
-    qDebug() << "AudioOutput, " << l << " bytes were written";
+    qDebug() << "AudioOutput::writeMoreRaw, " << l << " bytes were written, rest="
+             << rest << ", buf_size=" << buf_size;
 }
 
 int AudioOutput::readMoreFlacData(char *buf, int len)

@@ -11,10 +11,6 @@ AudioBroadcaster::AudioBroadcaster(QObject *parent) :
     m_Socket = new QUdpSocket(this);
 
     m_AudioInput = new AudioInput(this, -1, false, false, true);
-
-    //m_Socket->bind(QHostAddress::AnyIPv4, BROADCAST_PORT);
-
-    //connect(m_Socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
 void AudioBroadcaster::start()
@@ -33,8 +29,11 @@ void AudioBroadcaster::readyRead()
 void AudioBroadcaster::readyReadNewFlacData(QByteArray buffer)
 {
     qint64 l = m_Socket->writeDatagram(buffer.data(), buffer.size(),
-                            QHostAddress::LocalHost, BROADCAST_PORT);
+                            QHostAddress::Broadcast, BROADCAST_PORT);
+
     qDebug() << "AudioBroadcaster::readyReadNewFlacData, "
              << l << " bytes were sent";
+    if(l<0)
+        qDebug() << "Socket error: " <<  m_Socket->error() << " " << m_Socket->errorString();
 
 }
